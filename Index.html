@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nature Memory Cache Puzzle</title>
+<style>
+  body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #b8e1b2 0%, #74c691 100%);
+    user-select: none;
+    touch-action: manipulation;
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-top: 1rem;
+  }
+
+  #code-display {
+    display: flex;
+    gap: 1rem;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .digit {
+    width: 2ch;
+    text-align: center;
+    transition: transform 0.6s ease, color 0.6s ease;
+  }
+
+  .reveal {
+    color: #1e5b2c;
+    transform: scale(1.4);
+  }
+
+  #game {
+    display: grid;
+    grid-template-columns: repeat(4, 70px);
+    grid-gap: 10px;
+    justify-content: center;
+  }
+
+  .card {
+    width: 70px;
+    height: 70px;
+    background: #d9f2da;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+
+  .flipped {
+    background: #fff;
+    transform: scale(0.95);
+  }
+
+  .matched {
+    background: #a9e6ac;
+    transform: scale(0.9);
+  }
+
+  #final {
+    display: none;
+    font-size: 2.2rem;
+    margin-top: 1.5rem;
+    animation: grow 1.2s ease forwards;
+  }
+
+  @keyframes grow {
+    0% { transform: scale(0); opacity: 0; }
+    60% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+</style>
+</head>
+<body>
+  <h1>🌿 Memory Puzzle 🌿</h1>
+  <div id="code-display">
+    <span class="digit" id="d1">❔</span>
+    <span class="digit" id="d2">❔</span>
+    <span class="digit" id="d3">❔</span>
+  </div>
+  <div id="game"></div>
+  <div id="final">🌲 Code: 578 🌲</div>
+
+<script>
+const icons = ["🌲","🍄","🌼","🍁","🌿","🦋"];
+let cards = [...icons, ...icons]
+  .sort(() => Math.random() - 0.5);
+
+const game = document.getElementById('game');
+const digits = ["5","7","8"];
+let revealedCount = 0;
+let first = null, lock = false;
+
+cards.forEach(icon => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.dataset.icon = icon;
+  card.innerText = "";
+  card.addEventListener('click', () => flip(card));
+  game.appendChild(card);
+});
+
+function flip(card) {
+  if (lock || card.classList.contains('flipped') || card.classList.contains('matched')) return;
+  card.classList.add('flipped');
+  card.innerText = card.dataset.icon;
+  if (!first) {
+    first = card;
+  } else {
+    lock = true;
+    setTimeout(() => {
+      if (card.dataset.icon === first.dataset.icon) {
+        card.classList.add('matched');
+        first.classList.add('matched');
+        revealedCount++;
+        revealDigit(revealedCount);
+        if (revealedCount === icons.length) showFinal();
+      } else {
+        card.classList.remove('flipped');
+        first.classList.remove('flipped');
+        card.innerText = "";
+        first.innerText = "";
+      }
+      first = null;
+      lock = false;
+    }, 700);
+  }
+}
+
+function revealDigit(n) {
+  if (n <= 3) {
+    const el = document.getElementById(`d${n}`);
+    el.innerText = digits[n-1];
+    el.classList.add('reveal');
+    setTimeout(()=> el.classList.remove('reveal'), 800);
+  }
+}
+
+function showFinal() {
+  setTimeout(() => {
+    document.getElementById('final').style.display = 'block';
+  }, 800);
+}
+</script>
+</body>
+</html>
