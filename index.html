@@ -80,7 +80,7 @@
   }
 
   #final-container {
-    display: flex;
+    display: none; /* hidden at start */
     flex-direction: column;
     align-items: center;
     margin-top: 1.5rem;
@@ -176,13 +176,20 @@ function revealDigit(n) {
 }
 
 function showFinal() {
-  // Hide the game board
+  // Fade out game board
+  game.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
   game.style.opacity = 0;
   game.style.transform = 'scale(0)';
-  // Show final container
-  const container = document.getElementById('final-container');
-  container.style.display = 'flex';
-  container.style.opacity = 1;
+  
+  // After fade, hide game and show final container
+  setTimeout(() => {
+    game.style.display = 'none';
+    const container = document.getElementById('final-container');
+    container.style.display = 'flex';
+    // Trigger reflow to restart animation
+    void container.offsetWidth;
+    container.style.opacity = 1;
+  }, 500);
 }
 </script>
 </body>
