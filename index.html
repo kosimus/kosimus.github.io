@@ -38,7 +38,6 @@
   }
 
   .reveal {
-    color: #1e5b2c;
     transform: scale(1.4);
   }
 
@@ -112,11 +111,11 @@
 <body>
   <h1>🌿 Memory Puzzle 🌿</h1>
   <div id="code-display">
-    <span class="digit" id="d1">❔</span>
-    <span class="digit" id="d2">❔</span>
-    <span class="digit" id="d3">❔</span>
+    <span class="digit" id="d1">🔒</span>
+    <span class="digit" id="d2">🔒</span>
+    <span class="digit" id="d3">🔒</span>
   </div>
-  <p id="hint">Find 3 pairs to reveal the code 🔑 / Finde 3 Paare, um den Code zu entdecken 🔑</p>
+  <p id="hint">Find 3 pairs to unlock the padlocks 🔑 / Finde 3 Paare, um die Vorhängeschlösser zu öffnen 🔑</p>
   <div id="game"></div>
   <div id="final-container">
     <div id="padlock">🔓</div>
@@ -128,7 +127,7 @@ const icons = ["🌲","🍄","🌼","🍁","🌿","🦋"];
 let cards = [...icons, ...icons].sort(() => Math.random() - 0.5);
 
 const game = document.getElementById('game');
-const digits = ["5","7","8"];
+const digits = ["d1","d2","d3"]; // IDs of padlock spans
 let revealedCount = 0; // tracks number of pairs for code
 let first = null, lock = false;
 
@@ -154,7 +153,7 @@ function flip(card) {
         card.classList.add('matched');
         first.classList.add('matched');
         revealedCount++;
-        revealDigit(revealedCount);
+        revealPadlock(revealedCount);
         if (revealedCount === 3) showFinal(); // trigger final animation after 3 pairs
       } else {
         card.classList.remove('flipped');
@@ -168,10 +167,10 @@ function flip(card) {
   }
 }
 
-function revealDigit(n) {
+function revealPadlock(n) {
   if (n <= 3) {
-    const el = document.getElementById(`d${n}`);
-    el.innerText = digits[n-1];
+    const el = document.getElementById(digits[n-1]);
+    el.innerText = "🔓"; // open padlock
     el.classList.add('reveal');
     setTimeout(()=> el.classList.remove('reveal'), 800);
   }
@@ -183,7 +182,7 @@ function showFinal() {
   game.style.opacity = 0;
   game.style.transform = 'scale(0)';
 
-  // Fade out code display and hint
+  // Fade out padlock row and hint
   const codeDisplay = document.getElementById('code-display');
   const hint = document.getElementById('hint');
   codeDisplay.style.opacity = 0;
