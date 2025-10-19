@@ -28,6 +28,7 @@
     gap: 1rem;
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
+    transition: opacity 0.5s ease;
   }
 
   .digit {
@@ -46,6 +47,7 @@
     margin-bottom: 1rem;
     text-align: center;
     color: #1e5b2c;
+    transition: opacity 0.5s ease;
   }
 
   #game {
@@ -181,9 +183,17 @@ function showFinal() {
   game.style.opacity = 0;
   game.style.transform = 'scale(0)';
 
-  // After fade, hide game and show final container
+  // Fade out code display and hint
+  const codeDisplay = document.getElementById('code-display');
+  const hint = document.getElementById('hint');
+  codeDisplay.style.opacity = 0;
+  hint.style.opacity = 0;
+
+  // After fade, hide elements and show final container
   setTimeout(() => {
     game.style.display = 'none';
+    codeDisplay.style.display = 'none';
+    hint.style.display = 'none';
     const container = document.getElementById('final-container');
     container.style.display = 'flex';
     // Trigger reflow to start animation
