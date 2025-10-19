@@ -114,7 +114,7 @@
     <span class="digit" id="d2">❔</span>
     <span class="digit" id="d3">❔</span>
   </div>
-  <p id="hint">Find all the pairs to reveal the code 🔑 / Finde alle Paare, um den Code zu entdecken 🔑</p>
+  <p id="hint">Find 3 pairs to reveal the code 🔑 / Finde 3 Paare, um den Code zu entdecken 🔑</p>
   <div id="game"></div>
   <div id="final-container">
     <div id="padlock">🔓</div>
@@ -127,7 +127,7 @@ let cards = [...icons, ...icons].sort(() => Math.random() - 0.5);
 
 const game = document.getElementById('game');
 const digits = ["5","7","8"];
-let revealedCount = 0;
+let revealedCount = 0; // tracks number of pairs for code
 let first = null, lock = false;
 
 cards.forEach(icon => {
@@ -153,7 +153,7 @@ function flip(card) {
         first.classList.add('matched');
         revealedCount++;
         revealDigit(revealedCount);
-        if (revealedCount === icons.length) showFinal();
+        if (revealedCount === 3) showFinal(); // trigger final animation after 3 pairs
       } else {
         card.classList.remove('flipped');
         first.classList.remove('flipped');
@@ -180,13 +180,13 @@ function showFinal() {
   game.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
   game.style.opacity = 0;
   game.style.transform = 'scale(0)';
-  
+
   // After fade, hide game and show final container
   setTimeout(() => {
     game.style.display = 'none';
     const container = document.getElementById('final-container');
     container.style.display = 'flex';
-    // Trigger reflow to restart animation
+    // Trigger reflow to start animation
     void container.offsetWidth;
     container.style.opacity = 1;
   }, 500);
