@@ -41,7 +41,25 @@
     transform: scale(1.4);
   }
 
-  #hint, #thanks {
+  #thanks {
+    margin-bottom: 0.5rem;
+    text-align: center;
+    transition: opacity 0.5s ease;
+  }
+
+  #thanks .de {
+    display: block;
+    font-weight: bold;
+    color: #155d27;
+  }
+
+  #thanks .en {
+    display: block;
+    font-style: italic;
+    color: #2f8142;
+  }
+
+  #hint {
     font-size: 1rem;
     margin-bottom: 1rem;
     text-align: center;
@@ -115,9 +133,16 @@
     <span class="digit" id="d2">🔒</span>
     <span class="digit" id="d3">🔒</span>
   </div>
-  <p id="hint">Find 3 pairs to unlock the padlocks 🔑 / Finde 3 Paare, um die Vorhängeschlösser zu öffnen 🔑</p>
-  <p id="thanks">Thank you for finding the cache! / Danke, dass du den Cache gefunden hast!</p>
+
+  <div id="thanks">
+    <span class="de">Danke, dass du den Cache gefunden hast!</span>
+    <span class="en"><i>Thank you for finding the cache!</i></span>
+  </div>
+
+  <p id="hint">Finde 3 Paare, um die Vorhängeschlösser zu öffnen 🔑 / <i>Find 3 pairs to unlock the padlocks 🔑</i></p>
+
   <div id="game"></div>
+
   <div id="final-container">
     <div id="padlock">🔓</div>
     <div id="final-code">🌲 Code: 578 🌲</div>
