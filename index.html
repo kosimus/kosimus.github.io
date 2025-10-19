@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nature Memory Cache Puzzle</title>
+<title>Geocaching Puzzle</title>
 <style>
   body {
     margin: 0;
@@ -41,7 +41,7 @@
     transform: scale(1.4);
   }
 
-  #hint {
+  #hint, #thanks {
     font-size: 1rem;
     margin-bottom: 1rem;
     text-align: center;
@@ -109,13 +109,14 @@
 </style>
 </head>
 <body>
-  <h1>🌿 Memory Puzzle 🌿</h1>
+  <h1>Geocaching Puzzle</h1>
   <div id="code-display">
     <span class="digit" id="d1">🔒</span>
     <span class="digit" id="d2">🔒</span>
     <span class="digit" id="d3">🔒</span>
   </div>
   <p id="hint">Find 3 pairs to unlock the padlocks 🔑 / Finde 3 Paare, um die Vorhängeschlösser zu öffnen 🔑</p>
+  <p id="thanks">Thank you for finding the cache! / Danke, dass du den Cache gefunden hast!</p>
   <div id="game"></div>
   <div id="final-container">
     <div id="padlock">🔓</div>
@@ -182,17 +183,20 @@ function showFinal() {
   game.style.opacity = 0;
   game.style.transform = 'scale(0)';
 
-  // Fade out padlock row and hint
+  // Fade out padlock row, hint, and thank-you line
   const codeDisplay = document.getElementById('code-display');
   const hint = document.getElementById('hint');
+  const thanks = document.getElementById('thanks');
   codeDisplay.style.opacity = 0;
   hint.style.opacity = 0;
+  thanks.style.opacity = 0;
 
   // After fade, hide elements and show final container
   setTimeout(() => {
     game.style.display = 'none';
     codeDisplay.style.display = 'none';
     hint.style.display = 'none';
+    thanks.style.display = 'none';
     const container = document.getElementById('final-container');
     container.style.display = 'flex';
     // Trigger reflow to start animation
